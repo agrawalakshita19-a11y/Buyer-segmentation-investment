@@ -1,15 +1,12 @@
+"""
+Buyer Segmentation & Investment Profiling — Parcl Real Estate Intelligence
 
-
+Entry point: page wiring only.
+All logic is in utils/; all visuals in components/; tokens in styles/.
+"""
 
 import os
-import sys
 import streamlit as st
-
-# Keep local application packages importable when Streamlit runs from a deployed path.
-APP_DIR = os.path.dirname(os.path.abspath(__file__))
-if APP_DIR not in sys.path:
-    sys.path.insert(0, APP_DIR)
-
 
 try:
     from dotenv import load_dotenv
@@ -17,13 +14,10 @@ try:
 except ImportError:
     pass
 
-
-
 from styles.theme import inject_css, SEG_COLORS, GREEN, MUTED
 from utils.data_loader import load_clustered, load_properties, DataLoadError
 from utils.formatters import fmt_currency, fmt_count
 from components.filters import render_filters
-
 from components.kpi_cards import render_kpis
 from components import charts
 
@@ -245,7 +239,7 @@ with tab4:
         disp["age"]         = disp["age"].apply(lambda x: f"{x:.0f}")
         st.dataframe(
             disp.sort_values("total_spend", ascending=False),
-            width="stretch", height=360,
+            use_container_width=True, height=360,
         )
     charts._end()
 
