@@ -22,6 +22,7 @@ from styles.theme import inject_css, SEG_COLORS, GREEN, MUTED
 from utils.data_loader import load_clustered, load_properties, DataLoadError
 from utils.formatters import fmt_currency, fmt_count
 from components.filters import render_filters
+
 from components.kpi_cards import render_kpis
 from components import charts
 
