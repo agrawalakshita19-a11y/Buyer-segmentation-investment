@@ -1,5 +1,15 @@
+"""
+Plotly chart builders — Parcl dark theme.
 
-
+Key design decision: PLOTLY_LAYOUT only contains font/background/margin.
+Axes (xaxis, yaxis) and legend are ALWAYS set via a separate second
+update_layout() call inside _apply_theme(), never in the same call as
+**PLOTLY_LAYOUT. This prevents:
+  TypeError: got multiple values for keyword argument 'legend'
+  TypeError: got multiple values for keyword argument 'xaxis'
+which happen when both PLOTLY_LAYOUT and the chart function pass the
+same key to update_layout() at the same time.
+"""
 import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
@@ -81,7 +91,7 @@ def segment_donut(df):
         legend_override=dict(orientation="v", x=1.02, y=0.5,
                              font=dict(color=WHITE, size=11)),
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 
 def segment_bar(df):
@@ -105,7 +115,7 @@ def segment_bar(df):
         fig, height=340, showlegend=False,
         xaxis_override=dict(title="Number of Buyers"),
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 
 def purpose_by_segment(df):
@@ -132,7 +142,7 @@ def purpose_by_segment(df):
         fig, height=340, barmode="stack",
         xaxis_override=dict(title="Percentage (%)", range=[0, 100]),
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 
 def loan_by_segment(df):
@@ -158,7 +168,7 @@ def loan_by_segment(df):
         fig, height=340, barmode="stack",
         xaxis_override=dict(title="Percentage (%)", range=[0, 100]),
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 
 # ── Tab 2: Investor Behaviour ─────────────────────────────────────────
@@ -181,7 +191,7 @@ def spend_by_segment(df):
         fig, height=360, showlegend=False,
         xaxis_override=dict(title="Average Total Spend ($M)"),
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 
 def price_vs_area_scatter(df):
@@ -212,7 +222,7 @@ def price_vs_area_scatter(df):
         legend_override=dict(orientation="v", x=1.01, y=1,
                              font=dict(color=WHITE, size=10)),
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 
 def units_by_segment(df):
@@ -233,7 +243,7 @@ def units_by_segment(df):
         fig, height=340, showlegend=False,
         xaxis_override=dict(title="Average Units Purchased"),
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 
 def satisfaction_segment(df):
@@ -256,7 +266,7 @@ def satisfaction_segment(df):
         xaxis_override=dict(tickangle=-20),
         yaxis_override=dict(title="Avg Satisfaction Score", range=[0, 5.5]),
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 
 def referral_channel(df):
@@ -282,7 +292,7 @@ def referral_channel(df):
         legend_override=dict(title="Segment", orientation="v", x=1.01,
                              font=dict(color=WHITE, size=10)),
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 
 # ── Tab 3: Geographic Analysis ────────────────────────────────────────
@@ -306,7 +316,7 @@ def country_bar(df):
         fig, height=340, showlegend=False,
         yaxis_override=dict(title="Number of Buyers"),
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 
 def geo_segment_heatmap(df):
@@ -333,7 +343,7 @@ def geo_segment_heatmap(df):
         fig, height=360, showlegend=False,
         xaxis_override=dict(tickangle=-20),
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 
 def spend_by_country(df):
@@ -356,7 +366,7 @@ def spend_by_country(df):
         fig, height=340, showlegend=False,
         yaxis_override=dict(title="Avg Total Spend ($M)"),
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 
 def age_by_segment(df):
@@ -379,7 +389,7 @@ def age_by_segment(df):
         fig, height=360, showlegend=False,
         yaxis_override=dict(title="Age"),
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
 
 # ── Tab 4: Segment Insights ───────────────────────────────────────────
@@ -458,4 +468,4 @@ def segment_radar(df):
         ),
         margin=dict(l=40, r=160, t=40, b=40),
     )
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
