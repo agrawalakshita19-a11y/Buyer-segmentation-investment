@@ -1,13 +1,22 @@
 
 
 import os
+import sys
 import streamlit as st
+
+# Keep local application packages importable when Streamlit runs from a deployed path.
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+if APP_DIR not in sys.path:
+    sys.path.insert(0, APP_DIR)
+
 
 try:
     from dotenv import load_dotenv
     load_dotenv()
 except ImportError:
     pass
+
+
 
 from styles.theme import inject_css, SEG_COLORS, GREEN, MUTED
 from utils.data_loader import load_clustered, load_properties, DataLoadError
