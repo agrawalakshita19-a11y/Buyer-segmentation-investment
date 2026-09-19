@@ -1,15 +1,3 @@
-"""
-Plotly chart builders — Parcl dark theme.
-
-Key design decision: PLOTLY_LAYOUT only contains font/background/margin.
-Axes (xaxis, yaxis) and legend are ALWAYS set via a separate second
-update_layout() call inside _apply_theme(), never in the same call as
-**PLOTLY_LAYOUT. This prevents:
-  TypeError: got multiple values for keyword argument 'legend'
-  TypeError: got multiple values for keyword argument 'xaxis'
-which happen when both PLOTLY_LAYOUT and the chart function pass the
-same key to update_layout() at the same time.
-"""
 import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
